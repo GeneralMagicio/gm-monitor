@@ -13,8 +13,9 @@ REQUIRED_CONTENT='{
   "debug": true,
   "log-driver": "loki",
   "log-opts": {
-        "loki-url": "https://loki.logs.giveth.io/loki/api/v1/push",
-        "loki-batch-size": "400"
+        "loki-url": "https://loki.logs.generalmagic.io/loki/api/v1/push",
+        "loki-batch-size": "400",
+	    "loki-external-labels": "tenant=services"
     }
 }'
 
