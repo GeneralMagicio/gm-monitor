@@ -13,54 +13,13 @@ clients:
       password: ${LOKIPASS}
 
 scrape_configs:
-  - job_name: ${INSTANCE}-impact-graph-logs
+  - job_name: ${INSTANCE}-${APP_NAME}-logs
     static_configs:
       - targets:
           - localhost
         labels:
-          job: ${INSTANCE}-impact-graph-logs
-          __path__: /var/giveth/logs/impact-graph/*
-
-  - job_name: ${INSTANCE}-auth-logs
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: ${INSTANCE}-auth-logs
-          __path__: /var/giveth/logs/auth/*
-
-  - job_name: ${INSTANCE}-notification-center-logs
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: ${INSTANCE}-notification-center-logs
-          __path__: /var/giveth/logs/notification-center/*
-
-  - job_name: ${INSTANCE}-giveconomy-notification-service-logs
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: ${INSTANCE}-giveconomy-notification-service-logs
-          __path__: /var/giveth/logs/giveconomy-notification-service/*
-
-  - job_name: ${INSTANCE}-api-logs
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: ${INSTANCE}-api-logs
-          __path__: /var/giveth/logs/api/*
-
-  - job_name: ${INSTANCE}-caddy-logs
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: ${INSTANCE}-caddy-logs
-          __path__: /var/giveth/logs/caddy/*
-
+          job: ${INSTANCE}-${APP_NAME}-logs
+          __path__: /var/app/logs/*
 
   - job_name: ${INSTANCE}-container-logs
     docker_sd_configs:

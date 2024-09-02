@@ -13,7 +13,6 @@ services:
     networks:
       - external_network
 
-
   node-exporter:
     image: quay.io/prometheus/node-exporter:$NODE_EXPORTER_VERSION
     volumes:
@@ -41,10 +40,10 @@ services:
     env_file:
       - .env
     volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
       - /var/log:/var/log
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/devops/giveth-all/logs:/var/giveth/logs
-      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ${HOST_LOG_FOLDER}:/var/app/logs
     command: -config.expand-env=true -config.file=/etc/promtail/config.yml
     restart: always
     networks:

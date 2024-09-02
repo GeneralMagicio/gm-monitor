@@ -1,4 +1,4 @@
-# giveth-monitor
+# Gm-Monitor
 
 *A generalized monitoring stack to be installed on individual servers that we want to monitor.*
 
@@ -11,7 +11,7 @@ Consists of:
 ## 1 - Configure and run the monitoring stack
 Clone the repo
 ```
-git clone https://github.com/Giveth/giveth-monitor.git
+git clone https://github.com/GeneralMagicio/gm-monitor.git
 ```
 Copy `.env.template` to `.env` and fill in the values
 
@@ -23,9 +23,16 @@ cp .env.template .env $$ nano .env
 
 *Promtail is the log client that will be shipping the logs from host machines to the Loki Server*
 
-1. Modify the `docker-compose.yml` file to add a new volume for a persistent log directory
-2. Configure the paths of all application logs to monitor in the `promtail-config.yml` file. Out of the box `giveth-monitor` is configured to observe a deployed `giveth-all` stack.
-3. Make sure `.env` had been copied and modified from `.env.template` - promtail depends on a **Loki URL**
+1. Modify the `.env` file to add a new volume for a persistent log directory
+```
+HOST_LOG_FOLDER=/home/gmadmin/myapp/logs
+```
+2. Modify the `.env` to reflect the folder name of the app we want to monitor
+```
+## The generic name of the app (The same name of the app folder when it is cloned from GH)
+APP_NAME=QAcc-BE
+```
+**Loki URL**
 
 ## Operate
 
@@ -47,44 +54,25 @@ docker-compose down
 docker-compose up -d containername
 ```
 
-## Add to a giveth-all host
+## Initialize the Monitor to run on our host
 
 If the host is configured to run caddy, you will need to open the necessary ports for the monitoring stack:
 
-
 **allow cAdvisor:**
 ```
-sudo ufw route allow proto tcp from any to any port 8080
+sudo bash init.sh
 ```
-
-**allow node-exporter:**
-```
-sudo ufw route allow proto tcp from any to any port 9100
-```
-
-**allow promtail**
-```
-sudo ufw route allow proto tcp from any to any port 9080
-```
-Or just run `01-allow-ports.sh`
-
-## Install Loki Docker log driver
-
-This is specifically configured to send the logs to the Giveth instance.
-
-Run `02-install-loki-docker-log-driver.sh`
-
 ## Further configuration
 Have a look at the two config files.
 
 1 - check `docker-compose.yml`:
 
-- correct network to observe other containers:
+- Correct network to observe other containers:
 ```
 networks:
   external_network:
     external:
-      name: giveth-all_giveth
+      name: giveth-all_giveth # Same name of the network that is running in the docker-compose of the app we want to monitor
 ```
 
 2 - check `promtail-config.yml` if you send more than one promtail exporter to your Loki instance:
