@@ -38,7 +38,7 @@ installLokiDriver () {
     "log-opts": {
             "loki-url": "'$LOKI_URL'/loki/api/v1/push",
             "loki-batch-size": "400",
-            "loki-external-labels": "tenant=services"
+            "loki-external-labels": "tenant='$INSTANCE'"
         }
     }'
 
