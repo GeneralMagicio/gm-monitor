@@ -14,7 +14,7 @@ services:
       - external_network
 
   node-exporter:
-    image: quay.io/prometheus/node-exporter:$NODE_EXPORTER_VERSION
+    image: prom/node-exporter:latest
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
