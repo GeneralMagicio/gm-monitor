@@ -42,6 +42,7 @@ services:
     volumes:
       - ./promtail-config.yml:/etc/promtail/config.yml
       - /var/log:/var/log
+      - /tmp/:/tmp/
       - /var/run/docker.sock:/var/run/docker.sock
       - ${HOST_LOG_FOLDER}:/var/app/logs
     command: -config.expand-env=true -config.file=/etc/promtail/config.yml
